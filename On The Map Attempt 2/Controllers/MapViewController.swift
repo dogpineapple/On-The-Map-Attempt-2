@@ -30,7 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         getStudentLocations()
         
         if ParseAPI.userPin.objectId != "" {
-            // CODE TO POST THE PIN THE USER JUST MADE REEEEEEEE
+            // CODE TO POST THE PIN THE USER JUST MADE REEEEEEEEee
         }
     }
     
