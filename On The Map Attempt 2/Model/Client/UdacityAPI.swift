@@ -9,14 +9,14 @@
 import Foundation
 
 class UdacityAPI {
-    
+    // userInfo will allow the user to GET a random first and last name. Saving the userId (account key) to access the GET Public User Data Endpoint
     struct userInfo {
         static var isUserRegistered = false
         static var userId = ""
         static var userFirstName = ""
         static var userLastName = ""
     }
-    
+    // MARK: Endpoints for the network requests
     enum Endpoints {
        
         static let base = "https://onthemap-api.udacity.com/v1"
@@ -39,7 +39,7 @@ class UdacityAPI {
             return URL(string: stringValue)!
         }
     }
-    
+    // Authenticate user login credentials and produce a session id/account key.
     class func postSession (udacity: UdacityAccount, completion: @escaping (Bool, Error?) -> Void) {
         var request = URLRequest(url: Endpoints.postSession.url)
         
@@ -68,17 +68,15 @@ class UdacityAPI {
                     completion(userInfo.isUserRegistered, nil)
                 }
             } catch {
-                print("failed at the catch statement")
                 DispatchQueue.main.async {
                     completion(false, error)
                 }
             }
-            
-            print(String(data: newData, encoding: .utf8)!)
         }
         task.resume()
     }
     
+    // Delete session when user logs out.
     class func deleteSession(completion: @escaping (String, Error?) -> Void) {
         var request = URLRequest(url: Endpoints.deleteSession.url)
         
@@ -98,7 +96,6 @@ class UdacityAPI {
                 }
                 return
             }
-            
             let range = Range(5..<data.count)
             let newData = data.subdata(in: range)
             
@@ -113,12 +110,11 @@ class UdacityAPI {
                     completion("", error)
                 }
             }
-            
-            print(String(data: newData, encoding: .utf8)!)
         }
         task.resume()
     }
     
+    // fetches random user data to use as first and last name for the user's location pin post.
     class func getUserData() {
         let request = URLRequest(url: Endpoints.getUserData.url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -132,14 +128,10 @@ class UdacityAPI {
                 let responseObject = try decoder.decode(UserRealName.self, from: newData)
                 userInfo.userFirstName = responseObject.firstName
                 userInfo.userLastName = responseObject.lastName
-
-                print("user first name within the getUserData \(responseObject.firstName)")
             } catch {
                 return
             }
         }
         task.resume()
     }
-    
-    
 }

@@ -28,13 +28,13 @@
                                 <rect key="frame" x="79" y="279" width="213" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cmk-xD-AHS">
                                 <rect key="frame" x="79" y="318" width="213" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdI-wc-qO4">
                                 <rect key="frame" x="79" y="356" width="213" height="30"/>
@@ -45,10 +45,17 @@
                                     <action selector="verifyLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cRx-0O-Gmy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0y-9x-cqS">
+                                <rect key="frame" x="32" y="607" width="312" height="30"/>
+                                <state key="normal" title="Don't have an Udacity account? Sign up here!"/>
+                                <connections>
+                                    <action selector="openSignUpURL:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jda-bK-FhS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="sdI-wc-qO4" secondAttribute="bottom" constant="281" id="02i-dt-1XN"/>
+                            <constraint firstItem="u0y-9x-cqS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="3uZ-5y-d8I"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cmk-xD-AHS" secondAttribute="trailing" constant="83" id="7XR-bw-y7s"/>
                             <constraint firstItem="sdI-wc-qO4" firstAttribute="top" secondItem="Cmk-xD-AHS" secondAttribute="bottom" constant="8" id="ACQ-nE-ZPp"/>
                             <constraint firstItem="Cmk-xD-AHS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="79" id="Gqk-Rx-4Yp"/>
@@ -56,10 +63,14 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lwP-Qe-Xti" secondAttribute="trailing" constant="106" id="Npj-5f-MAt"/>
                             <constraint firstItem="lwP-Qe-Xti" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="107" id="WdW-JC-bgC"/>
                             <constraint firstItem="5db-Tk-pJd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="79" id="aIv-g8-cAe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="u0y-9x-cqS" secondAttribute="trailing" constant="31" id="jYr-Vb-OSj"/>
+                            <constraint firstItem="5db-Tk-pJd" firstAttribute="top" secondItem="lwP-Qe-Xti" secondAttribute="bottom" constant="88" id="nqZ-fw-E64"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5db-Tk-pJd" secondAttribute="trailing" constant="83" id="nw5-Gq-6J1"/>
                             <constraint firstItem="lwP-Qe-Xti" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="150" id="sMr-6K-k50"/>
                             <constraint firstItem="sdI-wc-qO4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="79" id="tkQ-pz-pdc"/>
                             <constraint firstItem="Cmk-xD-AHS" firstAttribute="top" secondItem="5db-Tk-pJd" secondAttribute="bottom" constant="9" id="vtJ-Ry-tVK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="u0y-9x-cqS" secondAttribute="bottom" constant="30" id="wUS-ee-lJZ"/>
+                            <constraint firstItem="u0y-9x-cqS" firstAttribute="top" secondItem="sdI-wc-qO4" secondAttribute="bottom" constant="221" id="yWH-re-fnf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -68,6 +79,7 @@
                         <outlet property="emailTextField" destination="5db-Tk-pJd" id="sI3-he-h4O"/>
                         <outlet property="loginButton" destination="sdI-wc-qO4" id="EWD-tv-Mhf"/>
                         <outlet property="passwordTextField" destination="Cmk-xD-AHS" id="tY3-ag-n1G"/>
+                        <outlet property="signUpButton" destination="u0y-9x-cqS" id="Tsy-ck-X1M"/>
                         <segue destination="Lj1-K8-o7O" kind="presentation" identifier="loginSuccess" id="7d2-nJ-Txs"/>
                     </connections>
                 </viewController>
@@ -78,7 +90,6 @@
         <!--Item-->
         <scene sceneID="9cF-Za-VDA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="95P-te-tD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="xBg-An-NeY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" image="icon_listview-deselected" id="Clq-gL-nDd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vf0-vC-tNN">
@@ -89,6 +100,7 @@
                         <segue destination="EKC-YE-Dfy" kind="relationship" relationship="rootViewController" id="xrG-hZ-U5t"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="95P-te-tD1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2880.8000000000002" y="501.49925037481262"/>
         </scene>
@@ -145,7 +157,6 @@
                             <barButtonItem title="Item" image="icon_pin" id="WqJ-oD-eMc">
                                 <connections>
                                     <action selector="addPin:" destination="EKC-YE-Dfy" id="kjX-yy-wcE"/>
-                                    <segue destination="NjZ-LB-m0N" kind="presentation" identifier="createPinFromTableView" id="XM1-dX-ZoH"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Item" image="icon_refresh" id="06k-vw-raA">
@@ -166,12 +177,13 @@
                         <outlet property="refreshButton" destination="06k-vw-raA" id="Xl0-gx-V2Q"/>
                         <outlet property="tableView" destination="foc-zT-mFp" id="M7f-fQ-R9d"/>
                         <segue destination="YrQ-DQ-8DG" kind="unwind" identifier="unwindSegueToLoginViewController" unwindAction="unwindToLoginViewControllerWithSegue:" id="cjl-h0-qy4"/>
+                        <segue destination="NjZ-LB-m0N" kind="presentation" identifier="createPinFromTableView" id="Ypc-te-TZj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XGm-ps-nf5" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="YrQ-DQ-8DG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3812" y="500.59970014992507"/>
+            <point key="canvasLocation" x="3812" y="501"/>
         </scene>
         <!--Item-->
         <scene sceneID="YCK-JN-beW">
@@ -216,7 +228,6 @@
                             <barButtonItem title="Item" image="icon_pin" id="98k-Ra-mVb">
                                 <connections>
                                     <action selector="addPin:" destination="6Qf-8U-qE1" id="w8h-cv-R30"/>
-                                    <segue destination="NjZ-LB-m0N" kind="presentation" identifier="createPinFromMapView" id="glf-hT-Sez"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Item" image="icon_refresh" id="awX-O2-AWV">
@@ -237,12 +248,13 @@
                         <outlet property="pinButton" destination="98k-Ra-mVb" id="nBz-uL-gkV"/>
                         <outlet property="refreshButton" destination="awX-O2-AWV" id="Glh-l5-bYG"/>
                         <segue destination="KuS-y4-J0a" kind="unwind" identifier="unwindSegueToLoginViewController" unwindAction="unwindToLoginViewControllerWithSegue:" id="2NX-wA-nDs"/>
+                        <segue destination="NjZ-LB-m0N" kind="presentation" identifier="createPinFromMapView" id="1zf-ZL-lFd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HcH-k5-pHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="KuS-y4-J0a" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3813.5999999999999" y="-201.04947526236884"/>
+            <point key="canvasLocation" x="3812" y="-201"/>
         </scene>
         <!--Create Pin View Controller-->
         <scene sceneID="B0H-tS-L5Q">
@@ -276,7 +288,6 @@
                                 <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="goToSubmitViewController:" destination="NjZ-LB-m0N" eventType="touchUpInside" id="UkN-Ka-S7u"/>
-                                    <segue destination="44z-33-ZIf" kind="presentation" identifier="goToAddURL" id="HJZ-p1-avW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -291,6 +302,7 @@
                             <constraint firstItem="z4T-Dj-v44" firstAttribute="trailing" secondItem="aX5-VY-wjH" secondAttribute="trailing" id="HEK-IE-cHF"/>
                             <constraint firstItem="aX5-VY-wjH" firstAttribute="bottom" secondItem="2Es-k0-JWZ" secondAttribute="bottom" constant="337.5" id="Nm0-hW-ueQ"/>
                             <constraint firstItem="2Es-k0-JWZ" firstAttribute="top" secondItem="z4T-Dj-v44" secondAttribute="bottom" constant="86" id="VbM-I5-kHq"/>
+                            <constraint firstItem="2XK-IM-koY" firstAttribute="leading" secondItem="aX5-VY-wjH" secondAttribute="leading" constant="312" id="Vie-EM-XTE"/>
                             <constraint firstItem="z4T-Dj-v44" firstAttribute="top" secondItem="2XK-IM-koY" secondAttribute="bottom" constant="119.5" id="Y2X-xZ-JWh"/>
                             <constraint firstItem="2XK-IM-koY" firstAttribute="top" secondItem="aX5-VY-wjH" secondAttribute="top" constant="23" id="b92-6V-p7T"/>
                             <constraint firstItem="z4T-Dj-v44" firstAttribute="leading" secondItem="aX5-VY-wjH" secondAttribute="leading" id="eJu-tf-ZXA"/>
@@ -306,6 +318,7 @@
                         <outlet property="label" destination="0jl-u8-75o" id="Pmm-gp-rTg"/>
                         <outlet property="nextButton" destination="2Es-k0-JWZ" id="uAg-MG-QIu"/>
                         <outlet property="userLocationTextField" destination="z4T-Dj-v44" id="OXz-x5-HFK"/>
+                        <segue destination="44z-33-ZIf" kind="presentation" identifier="goToAddURL" id="yhi-As-DeI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EYx-aH-Pyu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -323,6 +336,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Igk-26-YY3">
                                 <rect key="frame" x="312" y="42" width="48" height="30"/>
                                 <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelPinCreation:" destination="44z-33-ZIf" eventType="touchUpInside" id="O1Y-p6-sBs"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share an URL! " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiz-S7-YD3">
                                 <rect key="frame" x="130" y="113.5" width="114" height="20.5"/>
@@ -342,10 +358,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRn-EN-UDR">
                                 <rect key="frame" x="150" y="498" width="74" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.80951199039999999" blue="0.82153013699999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Submit Pin"/>
                                 <connections>
                                     <action selector="submitPin:" destination="44z-33-ZIf" eventType="touchUpInside" id="Ge9-U2-Zdf"/>
-                                    <segue destination="Lj1-K8-o7O" kind="presentation" identifier="submitPinSuccess" id="6jc-ew-IcY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -363,6 +379,7 @@
                             <constraint firstItem="hiz-S7-YD3" firstAttribute="top" secondItem="cjW-Ry-cOO" secondAttribute="top" constant="93.5" id="T87-DB-tky"/>
                             <constraint firstItem="hiz-S7-YD3" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="130" id="U1y-RA-oeK"/>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="top" secondItem="bYu-b2-4d5" secondAttribute="bottom" constant="73" id="U7T-9g-BZQ"/>
+                            <constraint firstItem="Igk-26-YY3" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="312" id="eNe-O0-Zeu"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="top" secondItem="Igk-26-YY3" secondAttribute="bottom" constant="70" id="k8M-SI-luY"/>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="trailing" secondItem="cjW-Ry-cOO" secondAttribute="trailing" id="ke0-wT-FJU"/>
                             <constraint firstItem="YRn-EN-UDR" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="150" id="lF4-kp-RXu"/>
@@ -378,6 +395,7 @@
                         <outlet property="mapView" destination="AHd-iL-bkZ" id="6xr-gS-0Af"/>
                         <outlet property="submitButton" destination="YRn-EN-UDR" id="QjA-OQ-GCp"/>
                         <outlet property="urlTextField" destination="bYu-b2-4d5" id="STQ-0Y-KA5"/>
+                        <segue destination="Lj1-K8-o7O" kind="presentation" identifier="goToTabBarController" id="sxP-uh-mzh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGv-Rc-HMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -411,6 +429,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="7d2-nJ-Txs"/>
-        <segue reference="glf-hT-Sez"/>
+        <segue reference="1zf-ZL-lFd"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -17,30 +17,33 @@ class CreatePinViewController: UIViewController {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    
+    // Cancel will dismiss the view and return to the map view controller.
     @IBAction func cancelPinCreation(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    // Checks if the user has entered a location. If nothing has been entered, it will show an alert. Otherwise, it will perform the segue to the next view controller
     @IBAction func goToSubmitViewController(_ sender: Any) {
         if userLocationTextField.text != "" {
-            let destinationVC = storyboard?.instantiateViewController(withIdentifier: "SubmitCreatedPinViewController") as! SubmitCreatedPinViewController
-            self.navigationController?.pushViewController(destinationVC, animated: true)
+            performSegue(withIdentifier: "goToAddURL", sender: nil)
         } else {
-            print("A location was not entered")
+            showAlert(message: "Please enter a location.")
         }
     }
     
+    // Sends the inputed location to the next view controller so the location can be displayed on the map view in the submit pin VC and posted to the Parse API
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToAddURL" {
             let destinationVC = segue.destination as! SubmitCreatedPinViewController
             destinationVC.findLocation = userLocationTextField.text
-            print("it should have a location entered \(destinationVC.findLocation)")
         }
+    }
+    
+    // MARK: Alerts
+    func showAlert(message: String) {
+        let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        show(alertVC, sender: nil)
     }
     
 }

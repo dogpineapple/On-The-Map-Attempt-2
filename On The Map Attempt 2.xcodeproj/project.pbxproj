@@ -90,6 +90,7 @@
 			children = (
 				86475D96240DC1AF00F2D80C /* AppDelegate.swift */,
 				86475DB7240DC3EB00F2D80C /* Model */,
+				86475DD824105CE400F2D80C /* View */,
 				86475DB6240DC33A00F2D80C /* Controllers */,
 				86475D9A240DC1AF00F2D80C /* Main.storyboard */,
 				86475D9D240DC1B300F2D80C /* Assets.xcassets */,
@@ -177,6 +178,13 @@
 				86475DD0240DC80C00F2D80C /* UpdateStudentPin.swift */,
 			);
 			path = "Parse API Requests";
+			sourceTree = "<group>";
+		};
+		86475DD824105CE400F2D80C /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

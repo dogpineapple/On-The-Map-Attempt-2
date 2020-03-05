@@ -11,7 +11,7 @@ import CoreLocation
 
 class UserGeocodeLocation: NSObject {
     
-   // Changes the location string inputted by the user into lat/long coordinates
+   // Converts the location string inputted by the user into lat/long coordinates to create map annotation for map pin.
     func getCoordinate(addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressString) { (placemarks, error) in
@@ -26,7 +26,5 @@ class UserGeocodeLocation: NSObject {
             completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
         }
     }
-    
-    
 }
 

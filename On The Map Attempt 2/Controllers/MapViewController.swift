@@ -21,19 +21,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var refreshButton: UIBarButtonItem!
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // Before the view loads, the map pins will be removed and the annotations array will be cleared. We clear them because we want to reload for the recently posted student locations when the view is presented.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         mapView.delegate = self
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        annotations.removeAll()
         // Get the student location data and put into a dictionary
         getStudentLocations()
-        
-        if ParseAPI.userPin.objectId != "" {
-            // CODE TO POST THE PIN THE USER JUST MADE REEEEEEEEee
-        }
     }
     
+    // Creates the pins for each item in the annotations array.
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
         
@@ -50,6 +49,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
     
+    // Style of the pin and sets the action to open the url when the pin's url is tapped.
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
@@ -59,20 +59,27 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    // Checks if the objectId (pin) exists, if it does, it will ask the user if they want to overwrite their existing pin in an alert view. Otherwise, it brings them to the create pin view controller.
     @IBAction func addPin(_ sender: Any) {
-        performSegue(withIdentifier: "createPinFromMapView", sender: nil)
+        if ParseAPI.userPin.objectId != "" {
+            showAlert(message: "User pin currently exists. Confirm overwrite to change pin.")
+        } else {
+            performSegue(withIdentifier: "createPinFromMapView", sender: nil)
+        }
     }
     
+    // Refreshes the view.
     @IBAction func refreshData(_ sender: Any) {
-        self.mapView.removeAnnotations(self.annotations)
-        getStudentLocations()
+        viewWillAppear(true)
     }
     
+    // Logs the user out and goes back to the login page.
     @IBAction func logout(_ sender: Any) {
         UdacityAPI.deleteSession { (response, error) in }
         performSegue(withIdentifier: "unwindSegueToLoginViewController", sender: nil)
     }
     
+    // gets the list of students' posted information
     func getStudentLocations() {
         ParseAPI.getStudentLocations { (studentInformation, error) in
             for dictionary in studentInformation {
@@ -92,9 +99,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 
                 self.annotations.append(annotation)
             }
-            print("getStudentLocations has been run")
             self.mapView.addAnnotations(self.annotations)
         }
+    }
+    
+    // MARK: Alerts
+    func showAlert(message: String) {
+        let alertVC = UIAlertController(title: "Overwrite existing pin?", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) -> Void in
+            self.performSegue(withIdentifier: "createPinFromMapView", sender: nil)
+        }))
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
 

@@ -23,11 +23,6 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
     
     var studentData = [StudentInformation]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        getStudentLocations()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -36,11 +31,17 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.reloadData()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getStudentLocations()
+    }
     
+    // The number of rows in the table will equal to the number of elements are within studentData.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return studentData.count
     }
     
+    // Populates the cell with the data from studentData array.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell")
         let locations = studentData[indexPath.row]
@@ -50,10 +51,7 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
         return cell!
     }
     
-    @IBAction func goToCreatePinView(_ sender: Any) {
-        performSegue(withIdentifier: "CreatePinViewController", sender: nil)
-    }
-    
+    // When the student taps on a cell, it will open the url on the row that the user selected.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
         let selectedURL = studentData[indexPath.row]
@@ -63,29 +61,47 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
-    
+    // Checks if the objectId (pin) exists, if it does, it will ask the user if they want to overwrite their existing pin in an alert view. Otherwise, it brings them to the create pin view controller.
     @IBAction func addPin(_ sender: Any) {
-        performSegue(withIdentifier: "createPinFromTableView", sender: nil)
+        if ParseAPI.userPin.objectId != "" {
+            showAlert(message: "User pin currently exists. Confirm overwrite to change pin.")
+        } else {
+            performSegue(withIdentifier: "createPinFromTableView", sender: nil)
+        }
     }
     
+    // Refreshes the table cells with new data.
     @IBAction func refreshData(_ sender: Any) {
         studentData = [StudentInformation]()
         getStudentLocations()
         tableView.reloadData()
     }
+    
+    // Logs out the user and sends them to the login page.
     @IBAction func logout(_ sender: Any) {
         UdacityAPI.deleteSession { (response, error) in }
         performSegue(withIdentifier: "unwindSegueToLoginViewController", sender: nil)
     }
     
+    // Gets the list of students' information and adds them to the student Data array to populate the cells.
     func getStudentLocations() {
         ParseAPI.getStudentLocations { (students, error) in
             for aStudent in students {
                 let student = StudentInformation(objectId: aStudent.objectId, uniqueKey: aStudent.uniqueKey, firstName: aStudent.firstName, lastName: aStudent.lastName, mapString: aStudent.mapString, mediaURL: aStudent.mediaURL, latitude: aStudent.latitude, longitude: aStudent.longitude, createdAt: aStudent.createdAt, updatedAt: aStudent.updatedAt)
                 self.studentData.append(student)
             }
-            print("getStudentLocations has been run")
             self.tableView.reloadData()
         }
+    }
+    
+    // MARK: Alerts
+    func showAlert(message: String) {
+        let alertVC = UIAlertController(title: "Overwrite existing pin?", message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "Overwrite", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "createPinFromTableView", sender: nil)
+        }))
+
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(alertVC, animated: true, completion: nil)
     }
 }
