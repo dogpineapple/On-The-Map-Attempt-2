@@ -34,7 +34,7 @@
                                 <rect key="frame" x="79" y="318" width="213" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdI-wc-qO4">
                                 <rect key="frame" x="79" y="356" width="213" height="30"/>
@@ -364,14 +364,19 @@
                                     <action selector="submitPin:" destination="44z-33-ZIf" eventType="touchUpInside" id="Ge9-U2-Zdf"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Bf8-Cn-62f">
+                                <rect key="frame" x="177" y="192" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="bottom" secondItem="cjW-Ry-cOO" secondAttribute="bottom" id="0bD-eb-MdS"/>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="top" secondItem="bYu-b2-4d5" secondAttribute="bottom" constant="73" id="1Y7-bI-jhJ"/>
                             <constraint firstItem="cjW-Ry-cOO" firstAttribute="trailing" secondItem="Igk-26-YY3" secondAttribute="trailing" constant="15" id="5AO-4J-tNc"/>
+                            <constraint firstItem="Bf8-Cn-62f" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="177" id="6tm-3q-b49"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="top" secondItem="hiz-S7-YD3" secondAttribute="bottom" constant="8" id="89c-f4-MzI"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="trailing" secondItem="cjW-Ry-cOO" secondAttribute="trailing" id="A53-sw-K5u"/>
+                            <constraint firstItem="AHd-iL-bkZ" firstAttribute="top" secondItem="Bf8-Cn-62f" secondAttribute="bottom" constant="24" id="Bg8-cP-RZn"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="top" secondItem="hiz-S7-YD3" secondAttribute="bottom" constant="8" id="BxM-m9-f0f"/>
                             <constraint firstItem="cjW-Ry-cOO" firstAttribute="bottom" secondItem="YRn-EN-UDR" secondAttribute="bottom" constant="139" id="JMQ-5m-9HG"/>
                             <constraint firstItem="cjW-Ry-cOO" firstAttribute="trailing" secondItem="hiz-S7-YD3" secondAttribute="trailing" constant="131" id="PYi-60-sxw"/>
@@ -381,16 +386,19 @@
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="top" secondItem="bYu-b2-4d5" secondAttribute="bottom" constant="73" id="U7T-9g-BZQ"/>
                             <constraint firstItem="Igk-26-YY3" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="312" id="eNe-O0-Zeu"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="top" secondItem="Igk-26-YY3" secondAttribute="bottom" constant="70" id="k8M-SI-luY"/>
+                            <constraint firstItem="Bf8-Cn-62f" firstAttribute="top" secondItem="bYu-b2-4d5" secondAttribute="bottom" constant="29" id="kNl-Sl-jyi"/>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="trailing" secondItem="cjW-Ry-cOO" secondAttribute="trailing" id="ke0-wT-FJU"/>
                             <constraint firstItem="YRn-EN-UDR" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" constant="150" id="lF4-kp-RXu"/>
                             <constraint firstItem="bYu-b2-4d5" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" id="lcL-n3-Dey"/>
                             <constraint firstItem="cjW-Ry-cOO" firstAttribute="trailing" secondItem="YRn-EN-UDR" secondAttribute="trailing" constant="151" id="m4A-Kf-tra"/>
+                            <constraint firstItem="cjW-Ry-cOO" firstAttribute="trailing" secondItem="Bf8-Cn-62f" secondAttribute="trailing" constant="178" id="o30-3i-FmM"/>
                             <constraint firstItem="AHd-iL-bkZ" firstAttribute="leading" secondItem="cjW-Ry-cOO" secondAttribute="leading" id="wXY-fV-udc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="cjW-Ry-cOO"/>
                     </view>
                     <navigationItem key="navigationItem" id="KNV-7g-BAn"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="Bf8-Cn-62f" id="Tyv-Fd-pDY"/>
                         <outlet property="cancelButton" destination="Igk-26-YY3" id="QhH-7Z-I5V"/>
                         <outlet property="mapView" destination="AHd-iL-bkZ" id="6xr-gS-0Af"/>
                         <outlet property="submitButton" destination="YRn-EN-UDR" id="QjA-OQ-GCp"/>
@@ -428,7 +436,7 @@
         <image name="icon_refresh" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7d2-nJ-Txs"/>
+        <segue reference="sxP-uh-mzh"/>
         <segue reference="1zf-ZL-lFd"/>
     </inferredMetricsTieBreakers>
 </document>

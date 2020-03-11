@@ -41,7 +41,7 @@ class CreatePinViewController: UIViewController {
     
     // MARK: Alerts
     func showAlert(message: String) {
-        let alertVC = UIAlertController(title: "Login Failed", message: message, preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Something went wrong.", message: message, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(alertVC, sender: nil)
     }

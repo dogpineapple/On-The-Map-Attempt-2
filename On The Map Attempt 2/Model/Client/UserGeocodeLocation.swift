@@ -18,7 +18,6 @@ class UserGeocodeLocation: NSObject {
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                    
                     completionHandler(location.coordinate, nil)
                     return
                 }

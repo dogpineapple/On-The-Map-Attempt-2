@@ -21,19 +21,29 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var urlTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Converts the location string into coordinates. The coordinates will be used to create an annotation for the pin.
         UserGeocodeLocation().getCoordinate(addressString: findLocation!) { (result, error) in
-            self.userLat = result.latitude
-            self.userLong = result.longitude
-            let userPin = MKPointAnnotation()
-            userPin.coordinate = CLLocationCoordinate2D(latitude: self.userLat, longitude: self.userLong)
-            self.mapView.addAnnotation(userPin)
-            
-            self.mapViewDidFinishLoadingMap(self.mapView)
+            // If user location put in an invalid location, the geocode will have an error and will return user to the previous view to re-enter a location.
+            if ((error) != nil) {
+                self.showInvalidLocationAlert()
+            } else {
+                self.activityIndicator.startAnimating()
+                
+                self.userLat = result.latitude
+                self.userLong = result.longitude
+                let userPin = MKPointAnnotation()
+                
+                userPin.coordinate = CLLocationCoordinate2D(latitude: self.userLat, longitude: self.userLong)
+                self.mapView.addAnnotation(userPin)
+                self.mapViewDidFinishLoadingMap(self.mapView)
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
         }
     }
     
@@ -78,6 +88,9 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
             if ParseAPI.userPin.objectId != "" {
                 print("this is the objectId that wasnt, \(ParseAPI.userPin.objectId)")
                 ParseAPI.putStudentLocation(uniqueKey: UdacityAPI.userInfo.userId, firstName: UdacityAPI.userInfo.userFirstName, lastName: UdacityAPI.userInfo.userLastName, mapString: findLocation, mediaURL: mediaURL!, latitude: userLat, longitude: userLong) { (response, error) in
+                    if ((error) != nil) {
+                        self.showAlert(message: "Network post failed. Please try again later.")
+                    }
                  }
             } else {
             // Otherwise, if objectId is an empty string, there is no existing pin. So we make a new pin.
@@ -88,9 +101,10 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    // Cancel will bring the user back to the map view controller
+    // Cancel will bring the user back to the location entry view controller.
     @IBAction func cancelPinCreation(_ sender: Any) {
-        performSegue(withIdentifier: "goToTabBarController", sender: nil)
+        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: Alerts
@@ -99,6 +113,12 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
         alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         show(alertVC, sender: nil)
     }
-
-    
+    // This alert will bring the user back to the location entry view controller.
+    func showInvalidLocationAlert() {
+        let alertVC = UIAlertController(title: "Something went wrong", message: "Invalid location entered. Please enter a valid location.", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+            }))
+        show(alertVC, sender: nil)
+    }
 }
