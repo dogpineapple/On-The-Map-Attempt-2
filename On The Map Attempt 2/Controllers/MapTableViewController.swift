@@ -21,8 +21,6 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
     
     var selectedIndex = 0
     
-    var studentData = [StudentInformation]()
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -38,13 +36,13 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
     
     // The number of rows in the table will equal to the number of elements are within studentData.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentData.count
+        return StudentModel.students.count
     }
     
     // Populates the cell with the data from studentData array.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell")
-        let locations = studentData[indexPath.row]
+        let locations = StudentModel.students[indexPath.row]
         
         cell?.textLabel?.text = "\(locations.firstName) \(locations.lastName)"
         cell!.detailTextLabel?.text = locations.mediaURL
@@ -54,7 +52,7 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
     // When the student taps on a cell, it will open the url on the row that the user selected.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndex = indexPath.row
-        let selectedURL = studentData[indexPath.row]
+        let selectedURL = StudentModel.students[indexPath.row]
         let app = UIApplication.shared
         app.openURL(URL(string: selectedURL.mediaURL)!)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -72,7 +70,7 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
     
     // Refreshes the table cells with new data.
     @IBAction func refreshData(_ sender: Any) {
-        studentData = [StudentInformation]()
+        StudentModel.students = [StudentInformation]()
         getStudentLocations()
         tableView.reloadData()
     }
@@ -88,7 +86,7 @@ class MapTableViewController: UIViewController, UITableViewDelegate, UITableView
         ParseAPI.getStudentLocations { (students, error) in
             for aStudent in students {
                 let student = StudentInformation(objectId: aStudent.objectId, uniqueKey: aStudent.uniqueKey, firstName: aStudent.firstName, lastName: aStudent.lastName, mapString: aStudent.mapString, mediaURL: aStudent.mediaURL, latitude: aStudent.latitude, longitude: aStudent.longitude, createdAt: aStudent.createdAt, updatedAt: aStudent.updatedAt)
-                self.studentData.append(student)
+                StudentModel.students.append(student)
             }
             self.tableView.reloadData()
         }

@@ -403,7 +403,6 @@
                         <outlet property="mapView" destination="AHd-iL-bkZ" id="6xr-gS-0Af"/>
                         <outlet property="submitButton" destination="YRn-EN-UDR" id="QjA-OQ-GCp"/>
                         <outlet property="urlTextField" destination="bYu-b2-4d5" id="STQ-0Y-KA5"/>
-                        <segue destination="Lj1-K8-o7O" kind="presentation" identifier="goToTabBarController" id="sxP-uh-mzh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGv-Rc-HMU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -436,7 +435,6 @@
         <image name="icon_refresh" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sxP-uh-mzh"/>
-        <segue reference="1zf-ZL-lFd"/>
+        <segue reference="Ypc-te-TZj"/>
     </inferredMetricsTieBreakers>
 </document>

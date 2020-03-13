@@ -26,14 +26,15 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        activityIndicator.startAnimating()
         // Converts the location string into coordinates. The coordinates will be used to create an annotation for the pin.
         UserGeocodeLocation().getCoordinate(addressString: findLocation!) { (result, error) in
             // If user location put in an invalid location, the geocode will have an error and will return user to the previous view to re-enter a location.
-            if ((error) != nil) {
+            if error != nil {
                 self.showInvalidLocationAlert()
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
             } else {
-                self.activityIndicator.startAnimating()
-                
                 self.userLat = result.latitude
                 self.userLong = result.longitude
                 let userPin = MKPointAnnotation()
@@ -86,18 +87,25 @@ class SubmitCreatedPinViewController: UIViewController, MKMapViewDelegate {
         } else {
             // If objectId is not an empty string, then there is an existing pin. So we update the pin instead of posting a new one.
             if ParseAPI.userPin.objectId != "" {
-                print("this is the objectId that wasnt, \(ParseAPI.userPin.objectId)")
                 ParseAPI.putStudentLocation(uniqueKey: UdacityAPI.userInfo.userId, firstName: UdacityAPI.userInfo.userFirstName, lastName: UdacityAPI.userInfo.userLastName, mapString: findLocation, mediaURL: mediaURL!, latitude: userLat, longitude: userLong) { (response, error) in
-                    if ((error) != nil) {
+                    if error != nil {
                         self.showAlert(message: "Network post failed. Please try again later.")
                     }
+                    if response != "" {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    }
                  }
-            } else {
+            } else if ParseAPI.userPin.objectId == "" {
             // Otherwise, if objectId is an empty string, there is no existing pin. So we make a new pin.
                 ParseAPI.postStudentLocation(uniqueKey: UdacityAPI.userInfo.userId, firstName: UdacityAPI.userInfo.userFirstName, lastName: UdacityAPI.userInfo.userLastName, mapString: findLocation, mediaURL: mediaURL!, latitude: userLat, longitude: userLong) { (response, error) in
+                    if error != nil{
+                        self.showAlert(message: "Network post failed. Please try again later.")
+                    }
+                    if response != "" {
+                        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+                    }
                 }
             }
-            performSegue(withIdentifier: "goToTabBarController", sender: nil)
         }
     }
     

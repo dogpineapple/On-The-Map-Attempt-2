@@ -51,6 +51,14 @@ class ParseAPI {
                 }
                 return
             }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                DispatchQueue.main.async {
+                    completion(nil, error)
+                }
+                return
+            }
+            
             let decoder = JSONDecoder()
             do {
                 let responseObject = try decoder.decode(ResponseType.self, from: data)
@@ -96,6 +104,7 @@ class ParseAPI {
         let body = PostStudentPin(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName, mapString: mapString, mediaURL: mediaURL, latitude: Float(latitude), longitude: Float(longitude))
         
         taskForPOSTOrPUTRequest(url: Endpoints.postStudentLocation.url, requestToMake: "POST", responseType: PostStudentLocationResponse.self, body: body) { (response, error) in
+            
             if let response = response {
                 userPin.objectId = response.objectId
                 completion(response.objectId, nil)
